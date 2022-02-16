@@ -12,5 +12,8 @@ public class WeaponClass : MonoBehaviour
     public float bulletVelocity;
     public float fireCad;
     public float fireVelocity;
-    private float shootReload = 0f;
+    public float shootReload = 0f;
+    public bool infiniteAmmo;
+    public Transform firePoint;
+
 }

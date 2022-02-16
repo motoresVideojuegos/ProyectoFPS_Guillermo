@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody playerRb;
 
-    PlayerClass plyClass;
+    public PlayerClass plyClass;
     
     // Start is called before the first frame update
     void Awake()
