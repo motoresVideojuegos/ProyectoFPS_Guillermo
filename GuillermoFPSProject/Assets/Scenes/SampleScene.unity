@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: acc779bf7dcfa0d4095213a6c13ff21b, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -796,6 +796,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 963194228}
     m_Modifications:
+    - target: {fileID: 2149213809651186175, guid: 4498fe1839651494ea0755bd86e51325, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.756
+      objectReference: {fileID: 0}
     - target: {fileID: 2149213810154615077, guid: 4498fe1839651494ea0755bd86e51325, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -839,6 +843,14 @@ PrefabInstance:
     - target: {fileID: 2149213810154615077, guid: 4498fe1839651494ea0755bd86e51325, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149213810154615079, guid: 4498fe1839651494ea0755bd86e51325, type: 3}
+      propertyPath: currentAmmo
+      value: 217
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149213810154615079, guid: 4498fe1839651494ea0755bd86e51325, type: 3}
+      propertyPath: maxCurrentAmmo
+      value: 1272
       objectReference: {fileID: 0}
     - target: {fileID: 2149213810154615129, guid: 4498fe1839651494ea0755bd86e51325, type: 3}
       propertyPath: m_Name

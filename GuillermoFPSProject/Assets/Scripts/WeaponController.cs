@@ -52,6 +52,7 @@ public class WeaponController : MonoBehaviour
 
     public void Fire(){
         GameObject newBullet = bulletPool.getObject();
+
         newBullet.transform.position = firePoint.position;
         newBullet.transform.rotation = firePoint.rotation;
 

@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeDamage: 1
-  activeTime_total: 5
+  activeTime_total: 2
   particleExplosion: {fileID: 2823112773277612515}
 --- !u!54 &-6728318842875397622
 Rigidbody:
@@ -139,10 +139,6 @@ PrefabInstance:
     - target: {fileID: 4182678659786922715, guid: 017d286e1fcd0ba4daa94100f172799a, type: 3}
       propertyPath: m_Name
       value: BulletExplosion
-      objectReference: {fileID: 0}
-    - target: {fileID: 4182678659786922715, guid: 017d286e1fcd0ba4daa94100f172799a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4182678659786922718, guid: 017d286e1fcd0ba4daa94100f172799a, type: 3}
       propertyPath: m_RootOrder

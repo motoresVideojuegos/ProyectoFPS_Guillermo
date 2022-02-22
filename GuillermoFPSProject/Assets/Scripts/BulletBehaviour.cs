@@ -18,24 +18,16 @@ public class BulletBehaviour : MonoBehaviour
     void Update()
     {
         if(Time.time - activeTime_actual >= activeTime_total){
+            particleExplosion.SetActive(false);
             gameObject.SetActive(false);
         }
     }
 
     private void OnTriggerEnter(Collider other) {
-        float timeToWait = 1f;
-        float actualTime = 0f;
-        //Instantiate(particleExplosion, this.transform.position, this.transform.rotation);
 
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<SphereCollider>().enabled = false;
-
+        particleExplosion.transform.position = this.transform.position;
+        particleExplosion.transform.rotation = this.transform.rotation;
         particleExplosion.SetActive(true);
-
-
-        this.gameObject.SetActive(false);
-
-        timeToWait = 1f;
 
         if(other.tag == "Enemy"){
             other.GetComponent<EnemyBehaviour>().RemoveLife(lifeDamage);
