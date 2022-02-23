@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
     private Transform firePoint;
     public bool isPlayer;
     WeaponClass wpClass;
+    public CanvasController canvas;
 
     void Awake()
     {
@@ -18,7 +19,14 @@ public class WeaponController : MonoBehaviour
         isPlayer = false;
         if(GetComponentInParent<PlayerController>()){
             isPlayer = true;
+            canvas.setCurrentAmmo(wpClass.currentAmmo);
         }       
+    }
+
+    private void Start() {
+        if(GetComponentInParent<PlayerController>()){
+           canvas.setMaxAmmo(wpClass.maxCurrentAmmo);
+       }
     }
 
     // Update is called once per frame
@@ -31,6 +39,9 @@ public class WeaponController : MonoBehaviour
                     Fire();
                     --wpClass.currentAmmo;
                     wpClass.shootReload = 0;
+                    if(isPlayer == true){
+                        canvas.setCurrentAmmo(wpClass.currentAmmo);
+                    }
                 }else{
                     Reload();
                     Fire();
@@ -71,9 +82,13 @@ public class WeaponController : MonoBehaviour
             wpClass.maxCurrentAmmo -= ammoDiff;
             wpClass.currentAmmo += ammoDiff;
         }
+
+        canvas.setCurrentAmmo(wpClass.currentAmmo);
+        canvas.setMaxAmmo(wpClass.maxCurrentAmmo);
     }
 
     public void addAmmo(int amount){
         wpClass.maxCurrentAmmo = Mathf.Clamp(wpClass.maxCurrentAmmo + amount, 0, wpClass.maxBullets);
+        canvas.setMaxAmmo(wpClass.maxCurrentAmmo);
     }
 }

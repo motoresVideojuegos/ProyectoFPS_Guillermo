@@ -7,7 +7,7 @@ public class EnemyBehaviour : MonoBehaviour
     EnemyClass enemyClass;
 
     UnityEngine.AI.NavMeshAgent nav;
-    public Transform player;
+    public GameObject player;
     public WeaponController weaponController;
     // Start is called before the first frame update
     void Start()
@@ -25,13 +25,13 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     private void EnemyMovement(){
-        if(Vector3.Distance( player.position, transform.position) < enemyClass.range && Vector3.Distance( player.position, transform.position) > enemyClass.rangeShoot){
+        if(Vector3.Distance( player.transform.position, transform.position) < enemyClass.range && Vector3.Distance( player.transform.position, transform.position) > enemyClass.rangeShoot){
             nav.isStopped = false;
             nav.SetDestination(player.transform.position);
 
-        }else if(Vector3.Distance( player.position, transform.position) < enemyClass.rangeShoot){
+        }else if(Vector3.Distance( player.transform.position, transform.position) < enemyClass.rangeShoot){
             nav.isStopped = true;
-            transform.LookAt(player);
+            transform.LookAt(player.transform);
             if (enemyClass.shootReload >= enemyClass.fireCad){
                 this.weaponController.Fire();
                 enemyClass.shootReload = 0;
@@ -47,7 +47,7 @@ public class EnemyBehaviour : MonoBehaviour
         enemyClass.currentHealth -= dmg;
 
         if(enemyClass.currentHealth <= 0){
-            player.GetComponent<PlayerController>().plyClass.addPoints(enemyClass.points);
+            player.GetComponent<PlayerController>().addPoints(enemyClass.points);
             Destroy(gameObject);
         }
     }

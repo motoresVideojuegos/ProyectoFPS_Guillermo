@@ -32,7 +32,7 @@ public class BulletBehaviour : MonoBehaviour
         if(other.tag == "Enemy"){
             other.GetComponent<EnemyBehaviour>().RemoveLife(lifeDamage);
         }else if(other.tag == "Player"){
-            other.GetComponent<PlayerController>().plyClass.takeDmg(lifeDamage);
+            other.GetComponent<PlayerController>().takeDmg(lifeDamage);
         }
     }
 }
