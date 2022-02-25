@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     public PlayerClass plyClass;
     public CanvasController canvas;
     public DeathMenuController deathMenu;
+
+    public List<WeaponClass> weaponList;
+ 
+    private int currentWeapon;
     
     // Start is called before the first frame update
     void Awake()
@@ -37,6 +41,9 @@ public class PlayerController : MonoBehaviour
         canvas.LifeBar(plyClass.currentHealth,plyClass.maxHealth);
         canvas.UpdateScore(plyClass.playerScore);
 
+        currentWeapon = 0;
+        weaponList[currentWeapon].gameObject.SetActive(true);
+
         Time.timeScale = 1;
         
     }
@@ -47,6 +54,7 @@ public class PlayerController : MonoBehaviour
         if(canMove){
             Movement();
             CameraView();
+            changeWeapons();
 
             if(Input.GetButtonDown("Jump")){
                 Jump();
@@ -106,5 +114,33 @@ public class PlayerController : MonoBehaviour
     public void addPoints(int points){
         plyClass.playerScore += points;
         canvas.UpdateScore(plyClass.playerScore);
+    }
+
+    public void changeWeapons(){
+        if(Input.GetAxis("Mouse ScrollWheel") > 0){
+            currentWeapon += 1;
+            if(currentWeapon > weaponList.Count - 1){
+                weaponList[currentWeapon - 1].gameObject.SetActive(false);
+                currentWeapon = 0;
+                weaponList[currentWeapon].gameObject.SetActive(true);
+            }else{
+                weaponList[currentWeapon - 1].gameObject.SetActive(false);
+                weaponList[currentWeapon].gameObject.SetActive(true);
+            }
+        }
+        if(Input.GetAxis("Mouse ScrollWheel") < 0){
+            currentWeapon -= 1;
+            if(currentWeapon < 0){
+                weaponList[0].gameObject.SetActive(false);
+                currentWeapon = weaponList.Count - 1;
+                weaponList[currentWeapon].gameObject.SetActive(true);
+            }else{
+                weaponList[currentWeapon + 1].gameObject.SetActive(false);
+                weaponList[currentWeapon].gameObject.SetActive(true);
+            }
+        }
+
+        canvas.setCurrentAmmo(weaponList[currentWeapon].currentAmmo);
+        canvas.setMaxAmmo(weaponList[currentWeapon].maxCurrentAmmo);
     }
 }

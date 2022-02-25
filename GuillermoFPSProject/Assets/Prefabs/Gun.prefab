@@ -51,7 +51,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2149213810154615077
 Transform:
   m_ObjectHideFlags: 0
@@ -141,12 +141,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13ab67b9b697564eae440667303f178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCurrentAmmo: 1272
-  currentAmmo: 217
-  maxBullets: 30
-  maxWeaponAmmo: 30
-  bulletVelocity: 10
-  fireCad: 2
+  maxCurrentAmmo: 50
+  currentAmmo: 10
+  maxBullets: 10
+  maxWeaponAmmo: 10
+  bulletVelocity: 15
+  fireCad: 4
   fireVelocity: 10
   shootReload: 0
   infiniteAmmo: 0
