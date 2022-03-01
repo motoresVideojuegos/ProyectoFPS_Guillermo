@@ -32,33 +32,36 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isPlayer == true){
-            if(Input.GetButton("Fire1") && wpClass.currentAmmo > 0){
-            if(wpClass.shootReload >= wpClass.fireCad){
-                if(wpClass.infiniteAmmo == false){
-                    Fire();
-                    --wpClass.currentAmmo;
-                    wpClass.shootReload = 0;
-                    if(isPlayer == true){
-                        canvas.setCurrentAmmo(wpClass.currentAmmo);
-                    }
-                }else{
-                    Reload();
-                    Fire();
-                    wpClass.shootReload = 0;
-                }
+        if(wpClass.picked == true){
+            if(isPlayer == true){
+                if(Input.GetButton("Fire1") && wpClass.currentAmmo > 0){
+                    if(wpClass.shootReload >= wpClass.fireCad){
+                        if(wpClass.infiniteAmmo == false){
+                            Fire();
+                            --wpClass.currentAmmo;
+                            wpClass.shootReload = 0;
+                            if(isPlayer == true){
+                                canvas.setCurrentAmmo(wpClass.currentAmmo);
+                            }
+                        }else{
+                            Reload();
+                            Fire();
+                            wpClass.shootReload = 0;
+                        }
             }
 
             wpClass.shootReload += wpClass.fireVelocity * Time.deltaTime;
 
-        }
+            }
 
-            if(Input.GetKeyDown(KeyCode.R)){
-                if(wpClass.currentAmmo != wpClass.maxWeaponAmmo){
-                    Reload();
+                if(Input.GetKeyDown(KeyCode.R)){
+                    if(wpClass.currentAmmo != wpClass.maxWeaponAmmo){
+                        Reload();
+                    }
                 }
             }
         }
+        
     }
 
     public void Fire(){

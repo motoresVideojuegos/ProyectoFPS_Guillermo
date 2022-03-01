@@ -15,5 +15,5 @@ public class WeaponClass : MonoBehaviour
     public float shootReload = 0f;
     public bool infiniteAmmo;
     public Transform firePoint;
-
+    public bool picked;
 }

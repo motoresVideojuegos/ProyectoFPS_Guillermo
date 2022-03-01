@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private bool canMove;
 
-    Camera camera;
+    public Camera camera;
 
     Rigidbody playerRb;
 
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public DeathMenuController deathMenu;
 
     public List<WeaponClass> weaponList;
+    public Transform weaponPosition;
  
     private int currentWeapon;
     
@@ -30,7 +31,6 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        camera = Camera.main;
         canMove = true;
 
         plyClass = GetComponent<PlayerClass>();
@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
         currentWeapon = 0;
         weaponList[currentWeapon].gameObject.SetActive(true);
+        initializeWeapons();
 
         Time.timeScale = 1;
         
@@ -58,6 +59,18 @@ public class PlayerController : MonoBehaviour
 
             if(Input.GetButtonDown("Jump")){
                 Jump();
+            }
+
+            if(Input.GetKeyDown(KeyCode.E)){
+                throwWeapon();
+            }
+
+            RaycastHit hit;
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out hit)){
+                if(hit.transform.GetComponent<WeaponClass>().picked == false){
+                    Debug.Log("Weapon");
+                }
             }
         }
         
@@ -117,30 +130,59 @@ public class PlayerController : MonoBehaviour
     }
 
     public void changeWeapons(){
-        if(Input.GetAxis("Mouse ScrollWheel") > 0){
-            currentWeapon += 1;
-            if(currentWeapon > weaponList.Count - 1){
-                weaponList[currentWeapon - 1].gameObject.SetActive(false);
-                currentWeapon = 0;
-                weaponList[currentWeapon].gameObject.SetActive(true);
-            }else{
-                weaponList[currentWeapon - 1].gameObject.SetActive(false);
-                weaponList[currentWeapon].gameObject.SetActive(true);
-            }
+        if(weaponList.Count != 0){
+                    if(Input.GetAxis("Mouse ScrollWheel") > 0){
+                        currentWeapon += 1;
+                        if(currentWeapon > weaponList.Count - 1){
+                            weaponList[currentWeapon - 1].gameObject.SetActive(false);
+                            currentWeapon = 0;
+                            weaponList[currentWeapon].gameObject.SetActive(true);
+                        }else{
+                            weaponList[currentWeapon - 1].gameObject.SetActive(false);
+                            weaponList[currentWeapon].gameObject.SetActive(true);
+                        }
+                    }
+                    if(Input.GetAxis("Mouse ScrollWheel") < 0){
+                        currentWeapon -= 1;
+                        if(currentWeapon < 0){
+                            weaponList[0].gameObject.SetActive(false);
+                            currentWeapon = weaponList.Count - 1;
+                            weaponList[currentWeapon].gameObject.SetActive(true);
+                        }else{
+                            weaponList[currentWeapon + 1].gameObject.SetActive(false);
+                            weaponList[currentWeapon].gameObject.SetActive(true);
+                        }
+                    }
+            canvas.setCurrentAmmo(weaponList[currentWeapon].currentAmmo);
+            canvas.setMaxAmmo(weaponList[currentWeapon].maxCurrentAmmo);
+        }else{
+            canvas.setCurrentAmmo(0);
+            canvas.setMaxAmmo(0);
         }
-        if(Input.GetAxis("Mouse ScrollWheel") < 0){
-            currentWeapon -= 1;
-            if(currentWeapon < 0){
-                weaponList[0].gameObject.SetActive(false);
-                currentWeapon = weaponList.Count - 1;
-                weaponList[currentWeapon].gameObject.SetActive(true);
-            }else{
-                weaponList[currentWeapon + 1].gameObject.SetActive(false);
-                weaponList[currentWeapon].gameObject.SetActive(true);
-            }
-        }
+ 
+    }
 
-        canvas.setCurrentAmmo(weaponList[currentWeapon].currentAmmo);
-        canvas.setMaxAmmo(weaponList[currentWeapon].maxCurrentAmmo);
+    public void pickUpWeapon(){
+
+    }
+
+    public void throwWeapon(){
+        int aux = currentWeapon;
+        weaponList[aux].picked = false;
+        weaponList[aux].transform.parent = null;
+        currentWeapon += 1;
+        if(currentWeapon > weaponList.Count - 1){
+            currentWeapon = 0;
+            weaponList[currentWeapon].gameObject.SetActive(true);
+        }else{
+            weaponList[currentWeapon].gameObject.SetActive(true);
+        }
+        weaponList.RemoveAt(aux);
+    }
+
+    public void initializeWeapons(){
+        for(int i = 0; i<weaponList.Count; i++){
+            weaponList[i].picked = true;
+        }
     }
 }
