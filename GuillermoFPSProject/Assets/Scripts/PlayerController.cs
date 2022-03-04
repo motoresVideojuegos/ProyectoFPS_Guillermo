@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public Transform weaponPosition;
  
     private int currentWeapon;
+    RaycastHit hit;
+
     
     // Start is called before the first frame update
     void Awake()
@@ -55,21 +57,35 @@ public class PlayerController : MonoBehaviour
         if(canMove){
             Movement();
             CameraView();
-            changeWeapons();
+
+            if(Input.GetAxis("Mouse ScrollWheel") > 0){
+                changeWeapons();
+            }
+            
+            if(Input.GetAxis("Mouse ScrollWheel") < 0){
+                changeWeapons();
+            }
+            
 
             if(Input.GetButtonDown("Jump")){
                 Jump();
             }
 
-            if(Input.GetKeyDown(KeyCode.E)){
+            if(Input.GetKeyDown(KeyCode.Q)){
                 throwWeapon();
             }
 
-            RaycastHit hit;
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out hit)){
-                if(hit.transform.GetComponent<WeaponClass>().picked == false){
-                    Debug.Log("Weapon");
+                if(hit.transform.GetComponent<WeaponClass>()){
+                    if(hit.transform.GetComponent<WeaponClass>().picked == false){
+                        OnDrawGizmosSelected();
+                        Debug.Log("Weapon");
+                        if(Input.GetKeyDown(KeyCode.E)){
+                            pickUpWeapon(hit);
+                        }
+                        
+                    }
                 }
             }
         }
@@ -162,7 +178,15 @@ public class PlayerController : MonoBehaviour
  
     }
 
-    public void pickUpWeapon(){
+    public void pickUpWeapon(RaycastHit hit){
+        GameObject weaponHit = hit.transform.gameObject;
+        weaponHit.transform.parent = weaponPosition;
+        weaponHit.transform.localRotation = Quaternion.Euler(0,0,0);
+        weaponHit.transform.localPosition = new Vector3(0,0,0.5f);
+
+        weaponHit.GetComponent<WeaponClass>().picked = true;
+        weaponHit.SetActive(false);
+        weaponList.Add(weaponHit.GetComponent<WeaponClass>());
 
     }
 
@@ -184,5 +208,10 @@ public class PlayerController : MonoBehaviour
         for(int i = 0; i<weaponList.Count; i++){
             weaponList[i].picked = true;
         }
+    }
+
+    private void OnDrawGizmosSelected() {
+         Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, 1);
     }
 }
