@@ -16,4 +16,5 @@ public class WeaponClass : MonoBehaviour
     public bool infiniteAmmo;
     public Transform firePoint;
     public bool picked;
+    public bool selected;
 }

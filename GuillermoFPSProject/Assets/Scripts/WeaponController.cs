@@ -10,9 +10,12 @@ public class WeaponController : MonoBehaviour
     WeaponClass wpClass;
     public CanvasController canvas;
 
+    private Material originalMat;
+
     void Awake()
     {
         wpClass = GetComponent<WeaponClass>();
+        wpClass.selected = false;
         bulletPool = GetComponent<PoolObjectController>();
         firePoint = wpClass.firePoint;
 
@@ -21,6 +24,8 @@ public class WeaponController : MonoBehaviour
             isPlayer = true;
             canvas.setCurrentAmmo(wpClass.currentAmmo);
         }       
+
+        originalMat = GetComponent<Renderer>().material;
     }
 
     private void Start() {
@@ -93,5 +98,9 @@ public class WeaponController : MonoBehaviour
     public void addAmmo(int amount){
         wpClass.maxCurrentAmmo = Mathf.Clamp(wpClass.maxCurrentAmmo + amount, 0, wpClass.maxBullets);
         canvas.setMaxAmmo(wpClass.maxCurrentAmmo);
+    }
+
+    public void restoreMat(){
+        GetComponent<Renderer>().material = originalMat;
     }
 }

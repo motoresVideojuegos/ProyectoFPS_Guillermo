@@ -1324,6 +1324,7 @@ MonoBehaviour:
   - {fileID: 1944193455}
   - {fileID: 2149213810700486618}
   weaponPosition: {fileID: 33946396}
+  rayHitMat: {fileID: 2100000, guid: cdf2c3e77aae94d4d920108d87f05303, type: 2}
 --- !u!114 &1071652942
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
  
     private int currentWeapon;
     RaycastHit hit;
+    public Material rayHitMat;
 
-    
     // Start is called before the first frame update
     void Awake()
     {
@@ -78,13 +78,14 @@ public class PlayerController : MonoBehaviour
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out hit)){
                 if(hit.transform.GetComponent<WeaponClass>()){
+                    GameObject hitGameobject = hit.transform.gameObject;
+                    hitGameobject.GetComponent<WeaponClass>().selected = true;
                     if(hit.transform.GetComponent<WeaponClass>().picked == false){
-                        OnDrawGizmosSelected();
-                        Debug.Log("Weapon");
+                        hitGameobject.GetComponent<Renderer>().material = rayHitMat;
                         if(Input.GetKeyDown(KeyCode.E)){
+                            hitGameobject.GetComponent<WeaponController>().restoreMat();
                             pickUpWeapon(hit);
                         }
-                        
                     }
                 }
             }
@@ -210,8 +211,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected() {
-         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 1);
-    }
 }
