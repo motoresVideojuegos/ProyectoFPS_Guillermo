@@ -9,11 +9,14 @@ public class EnemyBehaviour : MonoBehaviour
     UnityEngine.AI.NavMeshAgent nav;
     public GameObject player;
     public WeaponController weaponController;
+
+    public EnemyCanvas enemyCanvas;
     // Start is called before the first frame update
     void Start()
     {
         enemyClass = GetComponent<EnemyClass>();
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        enemyCanvas.LifeBar(enemyClass.currentHealth, enemyClass.maxHealth);
         nav.speed = enemyClass.velocityEnemy;
         enemyClass.currentHealth = enemyClass.maxHealth;
     }
@@ -45,10 +48,11 @@ public class EnemyBehaviour : MonoBehaviour
     }
     public void RemoveLife(int dmg){
         enemyClass.currentHealth -= dmg;
-
+        enemyCanvas.LifeBar(enemyClass.currentHealth, enemyClass.maxHealth);
         if(enemyClass.currentHealth <= 0){
             player.GetComponent<PlayerController>().addPoints(enemyClass.points);
             Destroy(gameObject);
+            
         }
     }
 

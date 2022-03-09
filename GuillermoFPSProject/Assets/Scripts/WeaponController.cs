@@ -15,7 +15,7 @@ public class WeaponController : MonoBehaviour
     void Awake()
     {
         wpClass = GetComponent<WeaponClass>();
-        wpClass.selected = false;
+        
         bulletPool = GetComponent<PoolObjectController>();
         firePoint = wpClass.firePoint;
 

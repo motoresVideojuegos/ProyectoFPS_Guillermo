@@ -76,10 +76,10 @@ public class PlayerController : MonoBehaviour
             }
 
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit)){
+            if(Physics.Raycast(ray, out hit, 1f)){
                 if(hit.transform.GetComponent<WeaponClass>()){
                     GameObject hitGameobject = hit.transform.gameObject;
-                    hitGameobject.GetComponent<WeaponClass>().selected = true;
+
                     if(hit.transform.GetComponent<WeaponClass>().picked == false){
                         hitGameobject.GetComponent<Renderer>().material = rayHitMat;
                         if(Input.GetKeyDown(KeyCode.E)){
