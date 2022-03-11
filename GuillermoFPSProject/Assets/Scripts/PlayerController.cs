@@ -44,8 +44,8 @@ public class PlayerController : MonoBehaviour
         canvas.UpdateScore(plyClass.playerScore);
 
         currentWeapon = 0;
-        weaponList[currentWeapon].gameObject.SetActive(true);
         initializeWeapons();
+        weaponList[currentWeapon].gameObject.SetActive(true);    
 
         Time.timeScale = 1;
         
@@ -76,10 +76,9 @@ public class PlayerController : MonoBehaviour
             }
 
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit, 1f)){
+            if(Physics.Raycast(ray, out hit, 2f)){
                 if(hit.transform.GetComponent<WeaponClass>()){
                     GameObject hitGameobject = hit.transform.gameObject;
-
                     if(hit.transform.GetComponent<WeaponClass>().picked == false){
                         hitGameobject.GetComponent<Renderer>().material = rayHitMat;
                         if(Input.GetKeyDown(KeyCode.E)){
@@ -186,6 +185,9 @@ public class PlayerController : MonoBehaviour
         weaponHit.transform.localPosition = new Vector3(0,0,0.5f);
 
         weaponHit.GetComponent<WeaponClass>().picked = true;
+        weaponHit.GetComponent<BoxCollider>().gameObject.SetActive(false);
+        weaponHit.GetComponent<Rigidbody>().isKinematic = true;
+
         weaponHit.SetActive(false);
         weaponList.Add(weaponHit.GetComponent<WeaponClass>());
 
@@ -193,8 +195,12 @@ public class PlayerController : MonoBehaviour
 
     public void throwWeapon(){
         int aux = currentWeapon;
+        
         weaponList[aux].picked = false;
         weaponList[aux].transform.parent = null;
+        
+        weaponList.RemoveAt(aux);
+
         currentWeapon += 1;
         if(currentWeapon > weaponList.Count - 1){
             currentWeapon = 0;
@@ -202,12 +208,14 @@ public class PlayerController : MonoBehaviour
         }else{
             weaponList[currentWeapon].gameObject.SetActive(true);
         }
-        weaponList.RemoveAt(aux);
+        
     }
 
     public void initializeWeapons(){
         for(int i = 0; i<weaponList.Count; i++){
             weaponList[i].picked = true;
+            weaponList[i].GetComponent<BoxCollider>().gameObject.SetActive(false);
+            weaponList[i].GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 

@@ -11,11 +11,16 @@ public class EnemyBehaviour : MonoBehaviour
     public WeaponController weaponController;
 
     public EnemyCanvas enemyCanvas;
+
+    private bool isHit;
+    private float waitSeconds = 5f;
     // Start is called before the first frame update
     void Start()
     {
+        isHit = false;
         enemyClass = GetComponent<EnemyClass>();
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        enemyCanvas.transform.gameObject.SetActive(isHit);
         enemyCanvas.LifeBar(enemyClass.currentHealth, enemyClass.maxHealth);
         nav.speed = enemyClass.velocityEnemy;
         enemyClass.currentHealth = enemyClass.maxHealth;
@@ -25,6 +30,15 @@ public class EnemyBehaviour : MonoBehaviour
     void Update()
     {
         EnemyMovement();
+        if(isHit == true){
+            enemyCanvas.transform.gameObject.SetActive(isHit);
+            waitSeconds -= Time.deltaTime;
+            if(waitSeconds <= 0){
+                isHit = false;
+            }
+        }else{
+            enemyCanvas.transform.gameObject.SetActive(isHit);
+        }
     }
 
     private void EnemyMovement(){
@@ -47,6 +61,8 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
     public void RemoveLife(int dmg){
+        isHit = true;
+        waitSeconds = 5f;
         enemyClass.currentHealth -= dmg;
         enemyCanvas.LifeBar(enemyClass.currentHealth, enemyClass.maxHealth);
         if(enemyClass.currentHealth <= 0){

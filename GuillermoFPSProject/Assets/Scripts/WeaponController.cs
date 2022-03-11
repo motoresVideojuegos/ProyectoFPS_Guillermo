@@ -11,6 +11,8 @@ public class WeaponController : MonoBehaviour
     public CanvasController canvas;
 
     private Material originalMat;
+    public Rigidbody weaponRigidbody;
+    public BoxCollider weaponBox;
 
     void Awake()
     {
@@ -38,6 +40,7 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
         if(wpClass.picked == true){
+            
             if(isPlayer == true){
                 if(Input.GetButton("Fire1") && wpClass.currentAmmo > 0){
                     if(wpClass.shootReload >= wpClass.fireCad){
@@ -65,6 +68,9 @@ public class WeaponController : MonoBehaviour
                     }
                 }
             }
+        }else{
+            weaponBox.gameObject.SetActive(true);
+            weaponRigidbody.isKinematic = false;
         }
         
     }
