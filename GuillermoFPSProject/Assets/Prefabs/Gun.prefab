@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 2149213810154615079}
   - component: {fileID: 2149213810154615078}
   - component: {fileID: 2149213810154615072}
-  - component: {fileID: 1983843968}
   - component: {fileID: 1983843967}
   m_Layer: 0
   m_Name: Gun
@@ -129,8 +128,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.8404281, y: 1.4575279, z: 1.1231825}
+  m_Center: {x: -0.0371781, y: 0.012033582, z: -0.009502042}
 --- !u!114 &2149213810154615079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +168,7 @@ MonoBehaviour:
   isPlayer: 0
   canvas: {fileID: 0}
   weaponRigidbody: {fileID: 1983843967}
-  weaponBox: {fileID: 1983843968}
+  weaponBox: {fileID: 2149213810154615130}
 --- !u!114 &2149213810154615072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,19 +183,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabObject: {fileID: 3736389313523323980, guid: 405c74b01cd67a046a3582976b2d3fbf, type: 3}
   numObjectStart: 10
---- !u!65 &1983843968
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2149213810154615129}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1983843967
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -45,8 +45,8 @@ public class PlayerController : MonoBehaviour
 
         currentWeapon = 0;
         initializeWeapons();
-        weaponList[currentWeapon].gameObject.SetActive(true);    
-
+        weaponList[currentWeapon].gameObject.SetActive(true);
+        
         Time.timeScale = 1;
         
     }
@@ -169,28 +169,44 @@ public class PlayerController : MonoBehaviour
                             weaponList[currentWeapon].gameObject.SetActive(true);
                         }
                     }
-            canvas.setCurrentAmmo(weaponList[currentWeapon].currentAmmo);
-            canvas.setMaxAmmo(weaponList[currentWeapon].maxCurrentAmmo);
+
+            changeAmmoCanvas(weaponList[currentWeapon].gameObject);
         }else{
-            canvas.setCurrentAmmo(0);
-            canvas.setMaxAmmo(0);
+            setCanvasAmmoTozero();
         }
  
     }
 
     public void pickUpWeapon(RaycastHit hit){
+
         GameObject weaponHit = hit.transform.gameObject;
-        weaponHit.transform.parent = weaponPosition;
-        weaponHit.transform.localRotation = Quaternion.Euler(0,0,0);
-        weaponHit.transform.localPosition = new Vector3(0,0,0.5f);
+        
+        if(weaponList.Count < 3){
+            
+            initializedWeaponComponents(weaponHit);
 
-        weaponHit.GetComponent<WeaponClass>().picked = true;
-        weaponHit.GetComponent<BoxCollider>().gameObject.SetActive(false);
-        weaponHit.GetComponent<Rigidbody>().isKinematic = true;
+            weaponHit.SetActive(false);
+            weaponList.Add(weaponHit.GetComponent<WeaponClass>());
 
-        weaponHit.SetActive(false);
-        weaponList.Add(weaponHit.GetComponent<WeaponClass>());
+            if(weaponList.Count == 1){
+                changeAmmoCanvas(weaponHit);
+                weaponHit.SetActive(true);
+            }
+            
+        }else{
 
+            throwWeapon(currentWeapon);
+
+            weaponList.Insert(currentWeapon,weaponHit.GetComponent<WeaponClass>());
+
+            initializedWeaponComponents(weaponHit);
+
+            changeAmmoCanvas(weaponHit);
+
+            weaponHit.SetActive(true);
+
+        }
+        
     }
 
     public void throwWeapon(){
@@ -201,6 +217,11 @@ public class PlayerController : MonoBehaviour
         
         weaponList.RemoveAt(aux);
 
+        if (weaponList.Count == 0){
+            currentWeapon = 0;
+            setCanvasAmmoTozero();
+            return;
+        }
         currentWeapon += 1;
         if(currentWeapon > weaponList.Count - 1){
             currentWeapon = 0;
@@ -211,12 +232,42 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    public void throwWeapon(int weaponPos){
+        
+        weaponList[weaponPos].picked = false;
+        weaponList[weaponPos].transform.parent = null;
+        
+        weaponList.RemoveAt(weaponPos);
+        
+    }
+
     public void initializeWeapons(){
         for(int i = 0; i<weaponList.Count; i++){
             weaponList[i].picked = true;
             weaponList[i].GetComponent<BoxCollider>().gameObject.SetActive(false);
             weaponList[i].GetComponent<Rigidbody>().isKinematic = true;
         }
+    }
+
+    private void initializedWeaponComponents(GameObject weapon){
+        weapon.transform.parent = weaponPosition;
+        weapon.transform.localRotation = Quaternion.Euler(0,0,0);
+        weapon.transform.localPosition = new Vector3(0,0,0.5f);
+
+        weapon.GetComponent<WeaponClass>().picked = true;
+        weapon.GetComponent<BoxCollider>().gameObject.SetActive(false);
+        weapon.GetComponent<Rigidbody>().isKinematic = true;
+        weapon.GetComponent<WeaponController>().isPlayer = true;
+    }
+
+    private void changeAmmoCanvas(GameObject weapon){
+        canvas.setCurrentAmmo(weapon.GetComponent<WeaponClass>().currentAmmo);
+        canvas.setMaxAmmo(weapon.GetComponent<WeaponClass>().maxCurrentAmmo);
+    }
+
+    private void setCanvasAmmoTozero(){
+        canvas.setCurrentAmmo(0);
+        canvas.setMaxAmmo(0);
     }
 
 }
