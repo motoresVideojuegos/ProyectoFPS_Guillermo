@@ -67,6 +67,7 @@ public class EnemyBehaviour : MonoBehaviour
         enemyCanvas.LifeBar(enemyClass.currentHealth, enemyClass.maxHealth);
         if(enemyClass.currentHealth <= 0){
             player.GetComponent<PlayerController>().addPoints(enemyClass.points);
+            GameManager.gm.removeEnemy();
             Destroy(gameObject);
             
         }

@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     public float minViewX;
     public float rotationX;
 
-    private bool canMove;
+    public bool canMove;
 
     public Camera camera;
 
