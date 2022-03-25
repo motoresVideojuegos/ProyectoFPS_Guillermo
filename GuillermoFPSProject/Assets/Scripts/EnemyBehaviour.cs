@@ -69,7 +69,6 @@ public class EnemyBehaviour : MonoBehaviour
             player.GetComponent<PlayerController>().addPoints(enemyClass.points);
             GameManager.gm.removeEnemy();
             Destroy(gameObject);
-            
         }
     }
 

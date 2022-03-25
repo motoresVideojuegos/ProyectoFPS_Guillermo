@@ -4286,6 +4286,7 @@ MonoBehaviour:
   enemyList:
   - {fileID: 1798223088}
   - {fileID: 423645}
+  - {fileID: 779680682}
   endGameCanvas: {fileID: 385193578}
   player: {fileID: 1071652941}
 --- !u!4 &1332636333
